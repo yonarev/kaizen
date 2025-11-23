@@ -1,0 +1,710 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz Móvil Kaizen</title>
+    <style>
+        /* BASE Y RESET */
+        html {
+            font-size: 62.5%; 
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #111; /* Oscurecido para notar transparencia */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        /* CONTENEDOR PRINCIPAL (APLICATION SHELL) */
+        .pantalla-contenedor {
+            display: flex;
+            flex-direction: column;
+            /* PROPIEDADES INICIALES (Formato PC) */
+            height: 95vh; 
+            width: 90vw; 
+            max-width: 140rem; 
+            max-height: 100vh;
+            
+            /* ESTÉTICA TRANSPARENTE */
+            border: 0.1rem solid rgba(153, 153, 153, 0.4); /* Borde más transparente */
+            border-radius: 1rem; 
+            box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.6); /* Sombra más fuerte */
+            background-color: #ffffff;
+            overflow: hidden;
+            transition: all 0.5s ease; /* Transición para simulación de vista */
+        }
+        /* FORMATOS DE VISTA (JS cambia estas propiedades) */
+        .formato-celular {
+            width: 37.5rem; /* Ancho de un móvil estándar (iPhone X) */
+            height: 81.2rem; /* Alto de un móvil estándar */
+            max-width: 100vw;
+            max-height: 100vh;
+            border-radius: 3rem;
+            box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.8);
+        }
+        .formato-pc {
+            width: 90vw;
+            height: 95vh;
+            max-width: 140rem;
+            max-height: 100vh;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.6);
+        }
+        /* BARRA SUPERIOR */
+        .borde-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            height: 4.5rem;
+            background-color: #2b3a42;
+            color: white;
+            z-index: 100;
+        }
+        .icono {
+            font-size: 2.4rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            transition: opacity 0.2s;
+        }
+        .icono:hover {
+            opacity: 0.8;
+        }
+        .sd-menu {
+            cursor: pointer;
+        }
+        .sd-menu span {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .logo-kaizen {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ffff;
+            text-shadow: 0 0 0.5rem rgba(0, 255, 255, 0.5);
+            cursor: pointer; 
+            transition: background-color 0.2s;
+        }
+        .logo-kaizen.active {
+            background-color: rgba(0, 255, 255, 0.2);
+            border-bottom: 0.2rem solid #00ffff;
+        }
+        .logo-kaizen img {
+            height: 3.5rem; 
+            width: auto;
+            margin-right: 0.5rem;
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(285deg) brightness(100%) contrast(100%); 
+        }
+        /* BOTONES DE SIMULACIÓN DE VISTA */
+        .botones-simulacion {
+            display: flex;
+            gap: 1rem;
+            margin-left: 1rem;
+            align-items: center;
+        }
+        .btn-vista {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+        .btn-vista:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .btn-vista.activo {
+            background-color: #00ffff;
+            color: #2b3a42;
+            font-weight: bold;
+        }
+        /* ÁREA CENTRAL Y BARRAS LATERALES */
+        .area-central {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        .borde-lateral {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 2rem;
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+        /* BARRA DE ICONOS FIJA (LATERAL IZQUIERDO PEQUEÑO) */
+        .lateral-iconos {
+            width: 6rem; 
+            background-color: #333;
+            border-right: 0.1rem solid #555;
+            padding: 1.5rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            z-index: 60;
+            gap: 2rem;
+            padding-top: 1rem;
+        }
+        .icono-menu {
+            width: 4rem; 
+            height: 4rem; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #00ffff;
+            font-size: 2.4rem;
+            transition: all 0.2s ease;
+            border-radius: 0.5rem;
+        }
+        .icono-menu:hover {
+            background-color: rgba(0, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        /* MENÚ LATERAL DESLIZANTE (LATERAL IZQUIERDO GRANDE) */
+        .lateral-izquierdo {
+            width: 0;
+            background-color: #444;
+            border-right: 0.1rem solid #555;
+            transition: width 0.3s ease;
+            overflow: hidden;
+            z-index: 50;
+            position: absolute;
+            left: 6rem; /* Se mueve junto al lateral-iconos */
+            top: 0;
+            height: 100%;
+        }
+        .lateral-izquierdo.activo {
+            width: 25rem; 
+        }
+        .menu-items-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 2rem 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease 0.1s;
+            min-width: 15rem;
+        }
+        .lateral-izquierdo.activo .menu-items-container {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Estilos de Menú y Submenú */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1rem;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.2s;
+            font-size: 1.4rem;
+            white-space: nowrap;
+            border-radius: 0.5rem;
+        }
+        .menu-item:hover {
+            background-color: #555;
+        }
+        .menu-item span.icono {
+            font-size: 2rem;
+            margin-right: 1rem;
+            padding: 0;
+        }
+        .submenu-container {
+            display: none;
+            flex-direction: column;
+            padding-left: 2rem;
+            background-color: #555;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .submenu-container.activo {
+            display: flex;
+        }
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            color: #b8e6f5;
+            font-size: 1.4rem;
+            transition: background-color 0.2s;
+            border-radius: 0.3rem;
+        }
+        .submenu-item:hover {
+            background-color: #666;
+        }
+        .menu-item.has-submenu::after {
+            content: '▼';
+            margin-left: auto;
+            font-size: 1rem;
+            transition: transform 0.3s;
+        }
+        .menu-item.has-submenu.abierto::after {
+            transform: rotate(180deg);
+        }
+        /* BARRA DE 5S (LATERAL DERECHO) */
+        .lateral-derecho {
+            border-left: 0.1rem solid #ccc;
+            background-color: #1e3a5f;
+            width: 7rem; 
+            align-items: center; 
+            justify-content: space-evenly; 
+        }
+        /* CONTENIDO PRINCIPAL */
+        .contenido-principal {
+            flex-grow: 1;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            padding: 2rem;
+            background-color: #0a1828;
+            overflow-y: auto;
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            background-blend-mode: luminosity;
+            transition: margin-left 0.3s ease;
+        }
+        .contenido-principal.menu-abierto {
+            margin-left: 25rem; 
+        }
+        .show-background {
+            background-image: url('esquema-completo.jpg');
+        }
+        /* ESTILOS ESPECÍFICOS DE 5S */
+        .cinco-s-kaizen {
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
+            justify-content: space-evenly; 
+            width: 100%;
+        }
+        .s-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0.3rem 0;
+        }
+        .s-button {
+            width: 4rem; 
+            height: 4rem; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.3rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 0.2rem solid #00ffff;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 1rem rgba(0, 255, 255, 0.4);
+            cursor: pointer;
+            color: #00ffff;
+            font-size: 2.2rem; 
+            text-shadow: 0 0 0.5rem rgba(0, 255, 255, 0.8);
+            line-height: 1;
+        }
+        .s-titulo {
+            color: #b8e6f5;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.1;
+        }
+        .s-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 2rem rgba(0, 255, 255, 0.8);
+            border-color: #00ffff;
+        }
+        .s-button:active {
+            transform: scale(0.95) translateY(0.1rem);
+            box-shadow: 0 0 0.5rem rgba(0, 255, 255, 0.8);
+            background: rgba(0, 255, 255, 0.3);
+        }
+        /* ESTILOS DE LA TARJETA (CARD) */
+        .element-card {
+            max-width: 60rem; 
+            background: rgba(0, 30, 60, 0.8);
+            border: 0.2rem solid #00ffff;
+            border-radius: 1.5rem;
+            padding: 4rem; 
+            transition: all 0.3s ease;
+            box-shadow: 0 0 2rem rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(0.5rem);
+            overflow-y: auto; 
+            cursor: pointer;
+        }
+        .element-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 0 1rem rgba(0, 255, 255, 0.5);
+            opacity: 0.95;
+        }
+        .icon-container {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 255, 255, 0.05));
+            border: 0.2rem solid #00ffff;
+            box-shadow: 0 0 2rem rgba(0, 255, 255, 0.4);
+        }
+        .element-titulo {
+            color: #00ffff;
+            font-size: 2.8rem; 
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 0 0 1rem rgba(0, 255, 255, 0.5);
+        }
+        .element-descripcion {
+            color: #b8e6f5;
+            font-size: 1.8rem; 
+            line-height: 1.6;
+            text-align: center;
+        }
+        /* BARRA INFERIOR */
+        .borde-inferior {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 5.5rem;
+            background-color: #2b3a42;
+            color: white;
+            box-shadow: 0 -0.2rem 0.5rem rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            z-index: 100;
+        }
+        .borde-inferior .icono {
+            color: white;
+            font-size: 2.2rem;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="pantalla-contenedor formato-pc" id="appContenedor">
+        <header class="borde-superior">
+            <div class="icono sd-menu" id="menuToggle" title="Menú SD">
+                <span>☰</span> 
+            </div>
+            <div class="logo-kaizen" id="kaizenToggle">
+                <img src="ideogramaKaizen.png" alt="Ideograma Kaizen">
+                KaiZen
+            </div>
+            <div class="botones-simulacion">
+                <button class="btn-vista" id="btnFullPan" title="Pantalla Completa">
+                    🗖 Full
+                </button>
+                <button class="btn-vista activo" id="btnSimPC" title="Simular Vista PC">
+                    🖥️ PC
+                </button>
+                <button class="btn-vista" id="btnSimCel" title="Simular Vista Móvil">
+                    📱 Cel
+                </button>
+            </div>
+            <div class="icono" title="Notificaciones">
+                <span>🔔</span> 
+            </div>
+        </header>
+        <main class="area-central">
+            <div class="lateral-iconos">
+                <div class="icono-menu" id="iconoAjustes" title="Ajustes">⚙️</div>
+                <div class="icono-menu" id="iconoAcerca" title="Acerca de">ℹ️</div>
+                <div class="icono-menu" id="iconoBibliografia" title="Bibliografía">📚</div>
+                <div style="height: 0.1rem; width: 80%; background-color: #555; margin: 1rem 0;"></div>
+                <div class="icono-menu" id="iconoBuscar" title="Buscar">🔍</div>
+                <div class="icono-menu" id="iconoFiltro" title="Filtro">▼</div>
+            </div>
+            <div class="lateral-izquierdo" id="menuLateral">
+                <div class="menu-items-container">
+                    <h4 style="color: #00ffff; font-size: 1.6rem; margin-bottom: 1.5rem; text-align: center; width: 100%;">Menú</h4>
+                    <div class="menu-item has-submenu" data-menu="ajustes" id="menuAjustes">
+                        <span class="icono">⚙️</span>
+                        Ajustes
+                    </div>
+                    <div class="submenu-container" id="submenuAjustes">
+                        <div class="submenu-item" data-modo="zen">🧘 Modo Zen</div>
+                        <div class="submenu-item" data-modo="oscuro">🌙 Modo Oscuro</div>
+                        <div class="submenu-item" data-modo="claro">☀️ Modo Claro</div>
+                    </div>
+                    <div class="menu-item" data-menu="acerca">
+                        <span class="icono">ℹ️</span>
+                        Acerca de
+                    </div>
+                    <div class="menu-item" data-menu="bibliografia">
+                        <span class="icono">📚</span>
+                        Bibliografía
+                    </div>
+                    <div style="height: 0.1rem; width: 80%; background-color: #555; margin: 1.5rem auto;"></div>
+                    <div class="menu-item" data-menu="buscar">
+                        <span class="icono">🔍</span>
+                        Buscar
+                    </div>
+                    <div class="menu-item" data-menu="filtro">
+                        <span class="icono">▼</span>
+                        Filtro
+                    </div>
+                </div>
+            </div>
+            <div class="contenido-principal" id="contenido-principal"><p style="color:white; font-size: 1.8rem; text-align: center;">.</p></div>
+            <div class="borde-lateral lateral-derecho">
+                <div class="cinco-s-kaizen">
+                    <div class="s-item">
+                        <div class="s-button" id="btnSeiri" title="Seiri">✅</div> 
+                        <h3 class="s-titulo">Clasificación</h3>
+                    </div>
+                    <div class="s-item">
+                        <div class="s-button" id="btnSeiton" title="Seiton">📐</div>
+                        <h3 class="s-titulo">Orden</h3>
+                    </div>
+                    <div class="s-item">
+                        <div class="s-button" id="btnSeiso" title="Seiso">✨</div>
+                        <h3 class="s-titulo">Limpieza</h3>
+                    </div>
+                    <div class="s-item">
+                        <div class="s-button" id="btnSeiketsu" title="Seiketsu">📋</div>
+                        <h3 class="s-titulo">Estándar</h3>
+                    </div>
+                    <div class="s-item">
+                        <div class="s-button" id="btnShitsuke" title="Shitsuke">⭐</div>
+                        <h3 class="s-titulo">Disciplina</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <nav class="borde-inferior">
+            <div class="icono" title="Inicio"><span>🏠</span></div>
+            <div class="icono" title="Favoritos"><span>❤️</span></div>
+            <div class="icono" title="Añadir"><span>➕</span></div>
+            <div class="icono" title="Mapa"><span>📍</span></div>
+            <div class="icono" title="Perfil"><span>👤</span></div>
+        </nav>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ELEMENTOS DEL DOM
+            const appContenedor = document.getElementById('appContenedor');
+            const mainContent = document.getElementById('contenido-principal');
+            const kaizenToggle = document.getElementById('kaizenToggle');
+            const menuToggle = document.getElementById('menuToggle');
+            const menuLateral = document.getElementById('menuLateral');
+            const defaultContentHTML = `<p style="color:white; font-size: 1.8rem; text-align: center;">.</p>`;
+
+            // BOTONES DE VISTA
+            const btnSimCel = document.getElementById('btnSimCel');
+            const btnSimPC = document.getElementById('btnSimPC');
+            const btnFullPan = document.getElementById('btnFullPan'); // Referencia al botón Full
+
+            // --- FUNCIÓN DE SIMULACIÓN DE VISTA ---
+            
+            /**
+             * Aplica la clase CSS para simular la vista de un dispositivo móvil.
+             * @param {HTMLElement} btn - Botón actual que fue presionado.
+             * @param {HTMLElement} otherBtn - El otro botón para desactivar.
+             */
+            function formatoCelular(btn, otherBtn) {
+                appContenedor.classList.add('formato-celular');
+                appContenedor.classList.remove('formato-pc');
+                btn.classList.add('activo');
+                otherBtn.classList.remove('activo');
+            }
+
+            /**
+             * Aplica la clase CSS para simular la vista de un monitor de PC.
+             * @param {HTMLElement} btn - Botón actual que fue presionado.
+             * @param {HTMLElement} otherBtn - El otro botón para desactivar.
+             */
+            function formatoPC(btn, otherBtn) {
+                appContenedor.classList.add('formato-pc');
+                appContenedor.classList.remove('formato-celular');
+                btn.classList.add('activo');
+                otherBtn.classList.remove('activo');
+            }
+
+            // Manejadores de eventos para los botones de vista
+            btnSimCel.addEventListener('click', () => formatoCelular(btnSimCel, btnSimPC));
+            btnSimPC.addEventListener('click', () => formatoPC(btnSimPC, btnSimCel));
+
+            // --- DATOS 5S ---
+            const sData = {
+                seiri: { 
+                    icon: '✅', 
+                    titulo: 'Clasificación (Seiri)', 
+                    descripcion: 'Separar lo necesario de lo innecesario y eliminar lo que no agrega valor.' 
+                },
+                seiton: { 
+                    icon: '📐', 
+                    titulo: 'Orden (Seiton)', 
+                    descripcion: 'Organizar y ubicar cada cosa en su lugar para acceder fácilmente.' 
+                },
+                seiso: { 
+                    icon: '✨', 
+                    titulo: 'Limpieza (Seiso)', 
+                    descripcion: 'Mantener el área de trabajo limpia e inspeccionar para detectar problemas.' 
+                },
+                seiketsu: { 
+                    icon: '📋', 
+                    titulo: 'Estandarización (Seiketsu)', 
+                    descripcion: 'Establecer normas y procedimientos para mantener las mejoras alcanzadas.' 
+                },
+                shitsuke: { 
+                    icon: '⭐', 
+                    titulo: 'Disciplina (Shitsuke)', 
+                    descripcion: 'Convertir las prácticas en hábitos y mantener el compromiso continuo.' 
+                }
+            };
+
+            // FUNCIÓN: createCardHTML (Comportamiento de Renderizado)
+            function createCardHTML(data) {
+                return `<div class="element-card"><div class="icon-container">${data.icon}</div><h3 class="element-titulo">${data.titulo}</h3><p class="element-descripcion">${data.descripcion}</p></div>`;
+            }
+
+            // FUNCIÓN: loadContentCard (Comportamiento Genérico para 5S)
+            function loadContentCard(key) {
+                const data = sData[key];
+                if (data) {
+                    mainContent.innerHTML = createCardHTML(data);
+                    mainContent.classList.remove('show-background');
+                    kaizenToggle.classList.remove('active');
+                }
+            }
+            /**
+             * Alterna la pantalla completa nativa del navegador para el contenedor principal.
+             */
+            function fullPan() {
+                const appContenedor = document.getElementById('appContenedor');
+
+                if (!document.fullscreenElement) {
+                    // Si no estamos en pantalla completa, la solicitamos en el contenedor
+                    appContenedor.requestFullscreen().catch(err => {
+                        console.error('Error al intentar habilitar pantalla completa:', err);
+                        alert(`Error al intentar habilitar pantalla completa: ${err.message} (Asegúrate de que el navegador lo permita)`);
+                    });
+                } else {
+                    // Si ya estamos en pantalla completa, salimos
+                    document.exitFullscreen();
+                }
+            }
+            
+            // CONEXIÓN DEL BOTÓN PANTALLA COMPLETA (CORRECCIÓN APLICADA)
+            btnFullPan.addEventListener('click', fullPan); 
+            // --------------------------------------------------------
+
+            // --- INICIALIZACIÓN ---
+            kaizenToggle.classList.add('active');
+            mainContent.classList.add('show-background');
+            mainContent.innerHTML = defaultContentHTML; // Muestra mensaje por defecto al inicio
+            
+            // --- MANEJO DE EVENTOS ---
+
+            // 1. Alternancia del Logo Kaizen
+            kaizenToggle.addEventListener('click', () => {
+                kaizenToggle.classList.toggle('active');
+                if (kaizenToggle.classList.contains('active')) {
+                    mainContent.classList.add('show-background');
+                    mainContent.innerHTML = defaultContentHTML;
+                } else {
+                    mainContent.classList.remove('show-background');
+                    // Si no está activo y no hay tarjeta visible, simplemente se queda vacío.
+                }
+            });
+
+            // 2. Alternancia del Menú Lateral Principal
+            const toggleMenu = () => {
+                menuLateral.classList.toggle('activo');
+                // Solo se desplaza el contenido si el menú es visible
+                if (menuLateral.classList.contains('activo')) {
+                     mainContent.classList.add('menu-abierto');
+                } else {
+                     mainContent.classList.remove('menu-abierto');
+                }
+            };
+
+            menuToggle.addEventListener('click', toggleMenu);
+
+            // 3. Conexión de Íconos de Barra Fija (lateral-iconos) con el Menú
+            // Al hacer clic en un icono fijo (⚙️, ℹ️), se abre el menú lateral grande.
+            document.querySelectorAll('.lateral-iconos .icono-menu').forEach(icon => {
+                icon.addEventListener('click', toggleMenu);
+            });
+
+
+            // 4. Manejadores de Eventos para los Botones 5S
+            document.getElementById('btnSeiri').addEventListener('click', () => {
+                loadContentCard('seiri');
+            });
+            document.getElementById('btnSeiton').addEventListener('click', () => {
+                loadContentCard('seiton');
+            });
+            document.getElementById('btnSeiso').addEventListener('click', () => {
+                loadContentCard('seiso');
+            });
+            document.getElementById('btnSeiketsu').addEventListener('click', () => {
+                loadContentCard('seiketsu');
+            });
+            document.getElementById('btnShitsuke').addEventListener('click', () => {
+                loadContentCard('shitsuke');
+            });
+
+            // 5. Manejo del Submenú de Ajustes
+            document.getElementById('menuAjustes').addEventListener('click', () => {
+                const submenu = document.getElementById('submenuAjustes');
+                submenu.classList.toggle('activo');
+                document.getElementById('menuAjustes').classList.toggle('abierto');
+            });
+
+            // 6. Manejo de Opciones de Submenú (Manteniendo el placeholder console.log)
+            document.querySelectorAll('.submenu-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const modo = e.target.getAttribute('data-modo');
+                    console.log('Modo seleccionado:', modo);
+                });
+            });
+            
+            // 8. PLACEHOLDERS para iconos de barra lateral (Se mantienen)
+            document.getElementById('iconoAjustes').addEventListener('click', () => {
+                // Aquí iría la lógica específica de 'Ajustes' si no fuera solo para abrir el menú
+            });
+            document.getElementById('iconoAcerca').addEventListener('click', () => {
+                // Lógica de "Acerca de"
+            });
+            document.getElementById('iconoBibliografia').addEventListener('click', () => {
+                // Lógica de "Bibliografía"
+            });
+            document.getElementById('iconoBuscar').addEventListener('click', () => {
+                // Lógica de "Buscar"
+            });
+            document.getElementById('iconoFiltro').addEventListener('click', () => {
+                // Lógica de "Filtro"
+            });
+
+        });
+    </script>
+
+</body>
+</html>
