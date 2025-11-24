@@ -1,0 +1,61 @@
+CARPETA 
+    kaizen
+subir a git 
+    en espacio 
+      https://github.com/yonarev/kaizen.git  
+    formulario 
+        Requisitos
+            El trabajo es de carácter individual o en parejas
+        ☼   Debe de subir su trabajo a Github o repositorio público análogo y subir el link mediante Canvas
+        ☼   Su trabajo debe de hacer uso de Github Pages o análogo, desplegándose de forma correcta y pública
+            El sitio debe contar con los siguientes requisitos
+        ƒ    El sitio debe de contar con a lo menos 3 páginas
+        ƒ        Un home
+        ƒ        Una página “Quienes somos”
+        ƒ        Una página con un formulario de contacto
+        ƒ    Una cabecera
+        ƒ        Debe contener Links para navegar a las diferentes secciones del sitio WEB
+        ƒ        Debe contener un logo. Cuando se le haga click al logo la página debe de navegar al home
+            En móvil 
+                la cabecera debe de contener solo el logo 
+                y los links quedar ocultos. 
+        ƒ    En escritorio 
+                tanto el logo como los links de navegación deben quedar visibles
+        ƒ    La cabecera debe ser fija, 
+                es decir, acompañar durante el recorrido del documento
+        ƒ    Una sección de presentación de la página
+        ƒ        Debe tener el título principal del documento
+        ƒ        Debe tener una imagen llamativa
+        ƒ        Debe contar con una frase que llame la atención
+        ƒ    Una sección de quiénes somos
+        ƒ        Debe contar con un título
+        ƒ        Debe contar con imágenes/fotos de quienes trata la página
+        ƒ        Debe contar con una descripción
+        ƒ    Una sección de proyectos
+        ƒ        Cada proyecto debe contar con
+        ƒ        Imagen alusiva
+        ƒ        Título
+        ƒ        Descripción
+        ƒ    Debe contar con a lo menos 3 proyectos
+            Una sección de contacto
+                La sección debe contener un formulario de contacto
+                El formulario debe contener los inputs necesarios para el nombre, e-mail de contacto, asunto y contenido (Con name, email, subject y content como "name" de los inputs
+                Los inputs son todos requeridos
+                Los inputs de texto máximo deben soportar 200 caracteres, excepto el del contenido que máximo deben ser 1000 caracteres
+                El input del e-mail debe validar que tenga un efectivamente un e-mail
+                El formulario debe enviar la información mediante POST a https://aterbonus.dev/api/toys/formsLinks to an external site.. Puede ver la información enviada en https://aterbonus.dev/toys/formsLinks to an external site.
+            Una sección adicional
+                Esta sección puede contener lo que usted quiera
+                Debe contener a lo menos un título
+                Puede ir en cualquier lugar de la página, no necesariamente al final
+                Póngale esfuerzo a su sección adicional
+            El sitio debe haber a lo menos un ejemplo de flex y uno de grid, usados apropiadamente
+            La página debe verse bien en dispositivos móviles (Ser responsiva)
+            La página debe contar con a los menos dos fuentes diferentes para el texto
+            La página debe de contar con una buena distribución de los elementos
+            Debe de aplicar lo aprendido en clases:
+            Uso adecuado de elementos html
+            Uso adecuado de atributos en los elementos html
+            Tanto el CSS como el HTML deben ser creados por usted
+            Si quiere utilizar bibliotecas adicionales, consúltelo con el docente
+            Si quiere puede sustituir una de las secciones arriba descritas, previa autorización del docente

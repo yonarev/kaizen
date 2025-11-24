@@ -1,0 +1,77 @@
+https://github.com/yonarev/kaizen
+cd ruta/a/tu/proyecto
+git init
+    Initialized empty Git repository in C:/Users/notebook/Downloads/KAIZEN-UP/.git/
+git add .
+
+git commit -m "Primer commit del proyecto Kaizen"
+    PS C:\Users\notebook\Downloads\KAIZEN-UP> git commit -m "Primer commit del proyecto Kaizen"
+    [master (root-commit) 296ccd1] Primer commit del proyecto Kaizen
+    3 files changed, 710 insertions(+)
+    create mode 100644 esquema-completo.jpg
+    create mode 100644 ideogramaKaizen.png
+    create mode 100644 index.html
+git remote add origin https://github.com/yonarev/kaizen.git
+
+GENERAR TOKEN 
+    PARA 
+        En el menú lateral izquierdo, ve hasta el final 
+        y haz clic en Developer settings (Configuración de desarrollador).
+        https://github.com/settings/apps
+
+        Personal access tokens (Tokens de acceso personal) > Tokens (classic).
+        Generate new token (Generar nuevo token) y luego en Generate new token (classic).
+            https://github.com/settings/tokens
+        Note: Dale un nombre descriptivo (ej: Token_para_Kaizen_PC).
+
+            Expiration: Selecciona un periodo de caducidad (se recomienda 30 o 60 días, o No expiration si no quieres renovarlo).
+            Select scopes: Marca la casilla repo (Esto le da al token permiso para leer, escribir y modificar tus repositorios).
+                Permisos Seleccionados:
+                repo (con todas sus sub-opciones marcadas): Este es el permiso clave. Otorga control total sobre los repositorios, incluyendo la capacidad de hacer push (subir cambios), que es justo lo que necesitas.
+            clic en el botón "Generate token" (Generar token) que estará al final de esa página.
+            kaizen mejora continua 
+    TOKEN 
+        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
+
+
+
+git push -u origin master
+    Username for 'https://github.com':
+    (PIDE token→)
+
+    C:\Users\notebook\Downloads\KAIZEN-UP>git push -u origin master
+        Username for 'https://github.com': yonarev
+        Password for 'https://yonarev@github.com':
+        Enumerating objects: 5, done.
+        Counting objects: 100% (5/5), done.
+        Delta compression using up to 2 threads
+        Compressing objects: 100% (5/5), done.
+        Writing objects: 100% (5/5), 173.41 KiB | 5.59 MiB/s, done.
+        Total 5 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+        To https://github.com/yonarev/kaizen.git
+        * [new branch]      master -> master
+        branch 'master' set up to track 'origin/master'.
+
+
+C:\Users\notebook\Downloads\KAIZEN-UP>git status
+On branch master
+nothing to commit, working tree clean
+
+🛠️ Pasos en el Navegador (GitHub)
+Abre tu navegador web y ve a tu repositorio: $https://github.com/yonarev/kaizen$.
+Haz clic en la pestaña Settings (Configuración).
+En el menú lateral izquierdo, haz clic en Pages.
+Bajo la sección "Build and deployment" (Construcción e implementación):
+    https://github.com/yonarev/kaizen/settings/pages
+
+En la opción Source (Fuente), asegúrate de que esté seleccionado Deploy from a branch (Desplegar desde una rama).
+En la sección Branch (Rama), selecciona la rama master (ya que esa fue la rama que subiste) en el menú desplegable.
+Asegúrate de que la carpeta de origen sea / (root).
+Haz clic en Save (Guardar).
+⏳ Verificación
+GitHub Pages tardará de uno a tres minutos en procesar y publicar tu sitio.
+
+local 
+    labstd
+        C:\Users\notebook\Downloads\KAIZEN-UP
+
