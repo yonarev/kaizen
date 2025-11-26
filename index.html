@@ -28,8 +28,6 @@
         color: #2b3a42;
     }
     header {
-        display: flex;           
-        justify-content: space-between; 
         position: fixed;
         top: 0;
         left: 0;
@@ -77,7 +75,6 @@
     #menu-toggle,
     .menu-icon {
         display: none;
-        margin-left: auto;
     }
     .inicio {
         height: 90vh;
@@ -93,9 +90,10 @@
         padding: 20px;
     }
     .inicio h1 {
-        font-size: 3rem;
+        font-size: 4rem;
         margin-bottom: 1rem;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: white;
     }
     .inicio p {
         font-size: 1.5rem;
@@ -239,18 +237,14 @@
     }
     .proyecto-img {
         height: 200px;
-        background-color: #ddd;
-        background-size: cover;
-        background-position: center;
+        width: 100%;
+        overflow: hidden;
     }
-    .img-toyota {
-        background-image: url('./toyota.png');
-    }
-    .img-bodega {
-        background-image: url('./bodegas.png');
-    }
-    .img-dashboard {
-        background-image: url('./dashboard.png');
+    .proyecto-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
     .proyecto-info {
         padding: 20px;
@@ -415,7 +409,7 @@
                 </div>
             </div>
             <div class="s-item" onclick="mostrarInfo('seiton')">
-                <div class="s-button" id="btnSeiton" title="Seiton">📐</div>
+                <div class="s-button" id="btnSeiton" title="Seiton">📋</div>
                 <div class="s-content">
                     <h3 class="s-titulo">Orden</h3>
                     <p class="s-desc">Un lugar para cada cosa.</p>
@@ -452,21 +446,27 @@
         <h2 class="titulo-seccion">Nuestros Proyectos</h2>
         <div class="proyectos-container">
             <div class="proyecto-card" onclick="irPagina('reduccion.html')">
-                <div class="proyecto-img img-toyota"></div>
+                <div class="proyecto-img">
+                    <img src="./toyota.png" alt="Lean Manufacturing - Línea de montaje automotriz">
+                </div>
                 <div class="proyecto-info">
                     <h3>Lean Manufacturing</h3>
                     <p>Reducción de tiempos de espera en línea de montaje automotriz.</p>
                 </div>
             </div>
             <div class="proyecto-card" onclick="irPagina('5s.html')">
-                <div class="proyecto-img img-bodega"></div>
+                <div class="proyecto-img">
+                    <img src="./bodegas.png" alt="5S en Bodegas - Centro logístico">
+                </div>
                 <div class="proyecto-info">
                     <h3>5S en Bodegas</h3>
                     <p>Optimización de inventario y seguridad en centro logístico.</p>
                 </div>
             </div>
             <div class="proyecto-card" onclick="irPagina('transformacion.html')">
-                <div class="proyecto-img img-dashboard"></div>
+                <div class="proyecto-img">
+                    <img src="./dashboard.png" alt="Transformación Digital - Dashboard de KPIs">
+                </div>
                 <div class="proyecto-info">
                     <h3>Transformación Digital</h3>
                     <p>Digitalización de KPIs para monitoreo de eficiencia en tiempo real.</p>

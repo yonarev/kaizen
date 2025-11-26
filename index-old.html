@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultora Kaizen - Mejora Continua</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f4f4f4;
+        padding-top: 60px;
+    }
+    h1,
+    h2,
+    h3 {
+        font-family: 'Montserrat', sans-serif;
+        color: #2b3a42;
+    }
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #2b3a42;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 5%;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .logo a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: #00ffff;
+        font-weight: bold;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+    }
+    .logo img {
+        height: 40px;
+        width: auto;
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(285deg) brightness(100%) contrast(100%);
+    }
+    nav ul {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+    }
+    nav a {
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+    nav a:hover {
+        color: #00ffff;
+    }
+    #menu-toggle,
+    .menu-icon {
+        display: none;
+    }
+    .inicio {
+        height: 90vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        padding: 20px;
+    }
+    .inicio h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .inicio p {
+        font-size: 1.5rem;
+        font-style: italic;
+        color: #00ffff;
+    }
+    .seccion {
+        padding: 60px 5%;
+    }
+    .fondo-Claro {
+        background-color: #e9e9e9;
+    }
+    .titulo-seccion {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        position: relative;
+    }
+    .titulo-seccion::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: #00ffff;
+        margin: 10px auto;
+    }
+    .acerca-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+    }
+    .acerca-images {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .acerca-images img {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .fondo-metodo {
+        background-color: #2b3a42;
+        color: white;
+    }
+    .fondo-metodo h2 {
+        color: #00ffff;
+    }
+    .cinco-s-kaizen {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    .s-item {
+        flex: 1;
+        min-width: 200px;
+        max-width: 250px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 25px 15px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s, background 0.3s;
+        border: 1px solid rgba(0, 255, 255, 0.1);
+        cursor: pointer;
+    }
+    .s-item:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #00ffff;
+    }
+    .s-button {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px auto;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        border: 2px solid #00ffff;
+        color: #00ffff;
+        background: rgba(0, 255, 255, 0.1);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+    .s-titulo {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+    .s-desc {
+        font-size: 0.9rem;
+        color: #ccc;
+    }
+    .info-despliegue {
+        width: 100%;
+        margin-top: 30px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        color: #333;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        display: none;
+        text-align: center;
+        border-left: 5px solid #00ffff;
+        animation: fadeIn 0.5s;
+    }
+    .info-despliegue h3 {
+        color: #2b3a42;
+        margin-bottom: 10px;
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .proyectos-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+    }
+    .proyecto-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 300px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        cursor: pointer;
+    }
+    .proyecto-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .proyecto-img {
+        height: 200px;
+        background-color: #ddd;
+        background-size: cover;
+        background-position: center;
+    }
+    .img-toyota {
+        background-image: url('./toyota.png');
+    }
+    .img-bodega {
+        background-image: url('./bodegas.png');
+    }
+    .img-dashboard {
+        background-image: url('./dashboard.png');
+    }
+    .proyecto-info {
+        padding: 20px;
+    }
+    .contacto-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    .formulario {
+        margin-bottom: 20px;
+    }
+    .formulario label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .formulario input,
+    .formulario textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: 'Roboto', sans-serif;
+    }
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #2b3a42;
+        color: #00ffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+    button[type="submit"]:hover {
+        background-color: #1a2429;
+    }
+    footer {
+    background-color: #111;
+    color: #777;
+    padding: 20px; 
+    text-align: center; 
+    }
+    footer p {
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        margin: 0;
+        gap: 10px;
+        flex-wrap: wrap; 
+    }
+    footer p img {
+        max-height: 40px; 
+        width: auto;
+    }
+    /* --- celular--- */
+    @media screen and (max-width: 768px) {
+        .menu-icon {
+            display: block;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        nav ul {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background-color: rgba(43, 58, 66, 0.9);
+            padding: 20px;
+            text-align: center;
+        }
+        #menu-toggle:checked ~ nav ul {
+            display: flex;
+        }
+        .inicio h1 {
+            font-size: 2rem;
+        }
+        .acerca-grid {
+            grid-template-columns: 1fr;
+        }
+        .acerca-images {
+            order: -1;
+        }
+        .proyecto-card {
+            width: 100%;
+        }
+        .s-item {
+            width: 100%;
+            max-width: none;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            padding: 15px;
+        }
+        .s-button {
+            margin: 0 15px 0 0;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#home">
+                <img src="ideogramaKaizen.png" alt="Ideograma Kaizen">
+                KaiZen
+            </a>
+        </div>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">☰</label>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#quienes-somos">Quiénes Somos</a></li>
+                <li><a href="#metodologia">Metodología</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="home" class="inicio">
+        <h1>Consultora Kaizen</h1>
+        <p>"Hoy mejor que ayer, mañana mejor que hoy"</p>
+    </section>
+    <section id="quienes-somos" class="seccion">
+        <h2 class="titulo-seccion">Quiénes Somos</h2>
+        <div class="acerca-grid">
+            <div class="acerca-text">
+                <p>Somos expertos en optimización de procesos y cultura organizacional. Nuestra pasión es transformar el caos en orden productivo.</p>
+                <br>
+                <p>Aplicamos la filosofía japonesa para eliminar desperdicios, mejorar la calidad y reducir costos de manera continua y sostenible.</p>
+            </div>
+            <div class="acerca-images">
+                <img src="./equipo.png" alt="Equipo">
+                <img src="./reunion.png" alt="Reunion">
+                <img src="./trabajo.png" alt="Trabajo">
+                <img src="./oficina.png" alt="Oficina">
+            </div>
+        </div>
+    </section>
+    <section id="metodologia" class="seccion fondo-metodo">
+        <h2 class="titulo-seccion">Nuestra Metodología (5S)</h2>
+        <div class="cinco-s-kaizen">
+            <div class="s-item" onclick="mostrarInfo('seiri')">
+                <div class="s-button" id="btnSeiri" title="Seiri">✅</div> 
+                <div class="s-content">
+                    <h3 class="s-titulo">Clasificación</h3>
+                    <p class="s-desc">Separar lo innecesario.</p>
+                </div>
+            </div>
+            <div class="s-item" onclick="mostrarInfo('seiton')">
+                <div class="s-button" id="btnSeiton" title="Seiton">📐</div>
+                <div class="s-content">
+                    <h3 class="s-titulo">Orden</h3>
+                    <p class="s-desc">Un lugar para cada cosa.</p>
+                </div>
+            </div>
+            <div class="s-item" onclick="mostrarInfo('seiso')">
+                <div class="s-button" id="btnSeiso" title="Seiso">✨</div>
+                <div class="s-content">
+                    <h3 class="s-titulo">Limpieza</h3>
+                    <p class="s-desc">Suprimir la suciedad.</p>
+                </div>
+            </div>
+            <div class="s-item" onclick="mostrarInfo('seiketsu')">
+                <div class="s-button" id="btnSeiketsu" title="Seiketsu">📋</div>
+                <div class="s-content">
+                    <h3 class="s-titulo">Estandarizar</h3>
+                    <p class="s-desc">Señalizar anomalías.</p>
+                </div>
+            </div>
+            <div class="s-item" onclick="mostrarInfo('shitsuke')">
+                <div class="s-button" id="btnShitsuke" title="Shitsuke">⭐</div>
+                <div class="s-content">
+                    <h3 class="s-titulo">Disciplina</h3>
+                    <p class="s-desc">Seguir mejorando.</p>
+                </div>
+            </div>
+        </div>
+        <div id="info-panel" class="info-despliegue">
+            <h3 id="info-titulo">Título</h3>
+            <p id="info-desc">Descripción</p>
+        </div>
+    </section>
+    <section id="proyectos" class="seccion">
+        <h2 class="titulo-seccion">Nuestros Proyectos</h2>
+        <div class="proyectos-container">
+            <div class="proyecto-card" onclick="irPagina('reduccion.html')">
+                <div class="proyecto-img img-toyota"></div>
+                <div class="proyecto-info">
+                    <h3>Lean Manufacturing</h3>
+                    <p>Reducción de tiempos de espera en línea de montaje automotriz.</p>
+                </div>
+            </div>
+            <div class="proyecto-card" onclick="irPagina('5s.html')">
+                <div class="proyecto-img img-bodega"></div>
+                <div class="proyecto-info">
+                    <h3>5S en Bodegas</h3>
+                    <p>Optimización de inventario y seguridad en centro logístico.</p>
+                </div>
+            </div>
+            <div class="proyecto-card" onclick="irPagina('transformacion.html')">
+                <div class="proyecto-img img-dashboard"></div>
+                <div class="proyecto-info">
+                    <h3>Transformación Digital</h3>
+                    <p>Digitalización de KPIs para monitoreo de eficiencia en tiempo real.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contacto" class="seccion fondo-Claro">
+        <h2 class="titulo-seccion">Contáctanos</h2>
+        <div class="contacto-container">
+            <form action="https://aterbonus.dev/api/toys/forms" method="POST">
+                <div class="formulario">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" maxlength="200" required placeholder="Tu nombre">
+                </div>
+                <div class="formulario">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required placeholder="tu@correo.com">
+                </div>
+                <div class="formulario">
+                    <label for="subject">Asunto:</label>
+                    <input type="text" id="subject" name="subject" maxlength="200" required placeholder="Asunto">
+                </div>
+                <div class="formulario">
+                    <label for="content">Mensaje:</label>
+                    <textarea id="content" name="content" rows="5" maxlength="1000" required placeholder="Escribe aquí..."></textarea>
+                </div>
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; Jorge Vera Videla - Ramo Interfáz de Usuario 2025. - Profesor: Gustavo alfredo marín sáez -  <img src="./logoIPVG.jpg" alt="Logotipo Instituto Profesional Virginio Gómez"></p>
+    </footer>
+    <script>
+        const datos5s = {
+            seiri: { titulo: "Clasificación (Seiri)", desc: "Consiste en identificar y separar los materiales necesarios de los innecesarios y desprenderse de estos últimos. Se eliminan del espacio de trabajo los elementos inútiles." },
+            seiton: { titulo: "Orden (Seiton)", desc: "Se trata de establecer el modo en que deben ubicarse e identificarse los materiales necesarios, de manera que sea fácil y rápido encontrarlos, utilizarlos y reponerlos." },
+            seiso: { titulo: "Limpieza (Seiso)", desc: "Basada en identificar y eliminar las fuentes de suciedad, asegurando que todos los medios se encuentren siempre en perfecto estado. La limpieza es inspección." },
+            seiketsu: { titulo: "Estandarización (Seiketsu)", desc: "El objetivo es distinguir fácilmente una situación normal de otra anormal, mediante normas sencillas y visibles para todos. Previene el deterioro." },
+            shitsuke: { titulo: "Disciplina (Shitsuke)", desc: "Consiste en trabajar permanentemente de acuerdo con las normas establecidas, convirtiendo los procesos anteriores en un hábito y compromiso constante." }
+        };
+        function mostrarInfo(key) {
+            const panel = document.getElementById('info-panel');
+            const titulo = document.getElementById('info-titulo');
+            const desc = document.getElementById('info-desc');
+            if (datos5s[key]) {
+                titulo.textContent = datos5s[key].titulo;
+                desc.textContent = datos5s[key].desc;
+                panel.style.display = 'block';
+            }
+        }
+        function irPagina(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
